@@ -22,6 +22,9 @@ async function createHome(c: Context<{ Bindings: Env }>) {
 
   try {
     const home = await createHomeService(c.env.DB, body.name.trim())
+    if(!home){
+      return c.json({ error: 'Home already exists' }, 409)
+    }
     return c.json(home, 201)
   } catch {
     return c.json({ error: 'Failed to create home' }, 500)

@@ -15,6 +15,9 @@ CREATE TABLE members (
         FOREIGN KEY (home_id)
         REFERENCES homes(id)
         ON DELETE CASCADE
+    
+    CONSTRAINT uq_home_member_name
+        UNIQUE (home_id, name)
 );
 
 CREATE TABLE bills (
