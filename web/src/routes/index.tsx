@@ -6,8 +6,8 @@ import {
   type Home as HomeData,
   type Member,
   type Bill,
+  type Balance,
 } from '../lib/api'
-import '../styles.css'
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -18,9 +18,12 @@ function Home() {
   const [members, setMembers] = useState<Member[]>([])
   const [homeName, setHomeName] = useState('')
   const [memberName, setMemberName] = useState('')
+  const [bills, setBills] = useState<Bill[]>([])
+  const [billTitle, setBillTitle] = useState('')
+  const [billAmount, setBillAmount] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-
+  const [balances, setBalances] = useState<Balance[]>([])
   async function handleCreateHome(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError('')
@@ -55,6 +58,43 @@ function Home() {
       setLoading(false)
     }
   }
+
+  async function handleCreateBill(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    if (!home || members.length === 0) {
+      setError('Add at least one member before creating a bill')
+      return
+    }
+
+    const amount = Number(billAmount)
+    const totalCents = Number(billAmount)
+
+    if (!Number.isSafeInteger(totalCents) || totalCents <= 0) {
+      setError('Enter a valid positive whole number of cents')
+      return
+    }
+
+    setError('')
+    setLoading(true)
+
+    try {
+      const bill = await api.createBill(
+        home.id,
+        billTitle.trim(),
+        totalCents,
+      )
+      console.log("bill", bill);
+
+      setBills((current) => [...current, bill])
+      setBillTitle('')
+      setBillAmount('')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not create bill')
+    } finally {
+      setLoading(false)
+    }
+}
 
   return (
     <main className="app-shell">
@@ -196,6 +236,89 @@ function Home() {
                 </button>
               </div>
             </form>
+
+            <section className="bill-section">
+              <div className="member-heading">
+                <div>
+                  <h3>Shared expenses</h3>
+                  <p>Create a bill and split it among your members.</p>
+                </div>
+                <span className="member-count">{bills.length}</span>
+              </div>
+
+              <form onSubmit={handleCreateBill} className="form">
+                <label htmlFor="billTitle">Bill title</label>
+                <input
+                  id="billTitle"
+                  value={billTitle}
+                  onChange={(event) => setBillTitle(event.target.value)}
+                  placeholder="e.g. Electricity bill"
+                  required
+                  maxLength={100}
+                />
+
+               <label htmlFor="billAmount">Total amount (cents)</label>
+                  <input
+                    id="billAmount"
+                    type="number"
+                    min="1"
+                    step="1"
+                    value={billAmount}
+                    onChange={(event) => setBillAmount(event.target.value)}
+                    placeholder="e.g. 100000"
+                    required
+                  />
+
+                <button
+                  type="submit"
+                  disabled={loading || !billTitle.trim() || !billAmount}
+                >
+                  {loading ? 'Creating...' : 'Create and split bill'}
+                  <span>→</span>
+                </button>
+              </form>
+
+              {bills.length === 0 ? (
+                <div className="empty-members">
+                  <strong>No shared expenses yet</strong>
+                  <p>Your created bills will appear here.</p>
+                </div>
+              ) : (
+                <div className="bill-list">
+                  {bills.map((bill) => (
+                    <article key={bill.id} className="bill-card">
+                      <div className="bill-heading">
+                        <div>
+                          <h4>{bill.title}</h4>
+                          <p>{bill.shares.length} member shares</p>
+                        </div>
+                        <strong>
+                          {bill.totalCents.toLocaleString('en-US')} cents
+                        </strong>
+                      </div>
+
+                      {bill.shares.map((share) => {
+                        const member = members.find(
+                          (item) => item.id === share.memberId,
+                        )
+
+                        return (
+                          <div className="share-row" key={share.id}>
+                            <span>{member?.name ?? 'Member'}</span>
+                            <strong>
+                              {share.amountCents.toLocaleString('en-US')} cents
+                            </strong>
+                            <span className={share.paidAt ? 'paid-status' : 'unpaid-status'}>
+                              {share.paidAt ? 'Paid' : 'Unpaid'}
+                            </span>
+                          </div>
+                        )
+                      })}
+                    </article>
+                  ))}
+                </div>
+              )}
+            </section>
           </div>
         )}
       </section>

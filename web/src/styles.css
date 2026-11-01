@@ -542,3 +542,78 @@ button:disabled {
     font-size: 9px;
   }
 }
+
+.bill-section {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #edf0eb;
+}
+
+.bill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.bill-card {
+  padding: 18px;
+  border: 1px solid #e7ece5;
+  border-radius: 12px;
+  background: #fbfcfa;
+}
+
+.bill-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.bill-heading h4 {
+  margin: 0;
+  color: #294536;
+  font-size: 14px;
+}
+
+.bill-heading p {
+  margin: 5px 0 0;
+  color: #919b92;
+  font-size: 11px;
+}
+
+.bill-heading strong {
+  color: #194c39;
+  font-size: 16px;
+}
+
+.share-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid #edf0eb;
+  font-size: 12px;
+}
+
+.share-row > span:first-child {
+  flex: 1;
+  color: #526457;
+}
+
+.share-row strong {
+  color: #354b3d;
+}
+
+.paid-status {
+  color: #43805a;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.unpaid-status {
+  color: #bd8750;
+  font-size: 10px;
+  font-weight: 700;
+}
