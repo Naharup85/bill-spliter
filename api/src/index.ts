@@ -5,7 +5,7 @@ import homeRoutes from './routes/home.routes.js'
 import paymentRoutes from './routes/payment.routes'
 
 const app = new Hono<{ Bindings: Env }>()
-app.use("/api/*", cors())
+app.use('/api/*', cors())
 
 app.get('/api/health', (c) => c.json({ status: 'ok' }))
 app.route('/api/homes', homeRoutes)

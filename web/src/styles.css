@@ -1,8 +1,7 @@
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
 
 :root {
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   color: #172b25;
   background: #f5f7f3;
   font-synthesis: none;
@@ -48,7 +47,7 @@ button {
   align-items: center;
   gap: 10px;
   color: #173d30;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-size: 21px;
   font-weight: 800;
   text-decoration: none;
@@ -114,11 +113,15 @@ button {
 .hero h1 {
   margin: 22px 0 15px;
   color: #17372c;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-size: clamp(38px, 5vw, 58px);
   font-weight: 800;
   line-height: 1.12;
   letter-spacing: -2.5px;
+}
+
+.balance-row span {
+  color: #526457;
 }
 
 .hero h1 span {
@@ -184,7 +187,7 @@ button {
 
 .decoration-card strong {
   color: #1e4535;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-size: 16px;
 }
 
@@ -220,7 +223,7 @@ button {
 .dashboard-header h2 {
   margin: 8px 0;
   color: #193b2e;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-size: 25px;
   font-weight: 800;
   letter-spacing: -0.7px;
@@ -258,7 +261,9 @@ input {
   background: #fbfcfa;
   color: #193b2e;
   font-size: 13px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 input:focus {
@@ -283,7 +288,9 @@ input::placeholder {
   color: white;
   font-size: 13px;
   font-weight: 700;
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
 
 .form button {
@@ -299,7 +306,7 @@ input::placeholder {
 button:disabled {
   cursor: not-allowed;
   opacity: 0.55;
-  transform: none !important;
+  transform: none;
 }
 
 .card-footnote {
@@ -341,7 +348,7 @@ button:disabled {
 .member-heading h3 {
   margin: 0;
   color: #294536;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-size: 15px;
 }
 
@@ -418,10 +425,22 @@ button:disabled {
   font-weight: 700;
 }
 
-.avatar-1 { background: #f5eee2; color: #98764b; }
-.avatar-2 { background: #e9edf5; color: #657ba2; }
-.avatar-3 { background: #f4e9ee; color: #9a6680; }
-.avatar-4 { background: #e8efed; color: #527d72; }
+.avatar-1 {
+  background: #f5eee2;
+  color: #98764b;
+}
+.avatar-2 {
+  background: #e9edf5;
+  color: #657ba2;
+}
+.avatar-3 {
+  background: #f4e9ee;
+  color: #9a6680;
+}
+.avatar-4 {
+  background: #e8efed;
+  color: #527d72;
+}
 
 .member-name {
   flex: 1;
@@ -616,4 +635,45 @@ button:disabled {
   color: #bd8750;
   font-size: 10px;
   font-weight: 700;
+}
+
+.pay-button {
+  padding: 7px 15px;
+  border: none;
+  border-radius: 7px;
+  background: #194c39;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pay-button:hover {
+  background: #236348;
+}
+
+.balance-section {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #edf0eb;
+}
+
+.balance-list {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.balance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid #edf0eb;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.balance-row strong {
+  color: #194c39;
 }

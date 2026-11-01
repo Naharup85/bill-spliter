@@ -155,3 +155,17 @@ You must understand every line you submit. We check this with your video and in 
 5. Paste the repository link and the video link in the application form.
 
 We will run `pnpm install && pnpm check && pnpm typecheck && pnpm test` on your repository.
+
+## Decisions
+
+### 1. Preserve Member Join Order
+
+I chose to maintain a `member_order` column in the members table using an auto-incrementing value. This preserves the order in which members are added to a home. It also makes bill splitting predictable because extra cents are assigned according to member join order, and balances can be displayed in the same order.
+
+### 2. Use D1 Batch Operations for Bill Creation
+
+I chose to use D1 batch operations when creating a bill and its shares. Since a bill and its shares are related records, creating them together helps maintain data consistency and prevents partially created bills.
+
+### 3. Persist the Selected Home Using localStorage
+
+I chose to use browser localStorage to remember the selected home. This allows users to refresh the page or reopen the application without having to select their home again. It provides a simple solution without introducing authentication or session management.

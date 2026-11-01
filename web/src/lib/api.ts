@@ -1,4 +1,4 @@
-const API_BASE_URL =import.meta.env.VITE_API_URL || 'http://localhost:8787'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8787'
 
 export type Home = {
   id: string
@@ -32,10 +32,12 @@ export type Balance = {
   outstandingCents: number
 }
 
-async function request<T>(
-  path: string,
-  options: RequestInit = {},
-): Promise<T> {
+export type HomeDetails = Home & {
+  members: Member[]
+  bills: Bill[]
+}
+
+async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
     headers: {
@@ -47,7 +49,7 @@ async function request<T>(
   const data = await response.json()
 
   if (!response.ok) {
-    throw new Error(data.error || 'Something went wrong')
+    throw new Error((data as { error?: string }).error || 'Something went wrong')
   }
 
   return data as T
@@ -59,6 +61,10 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ name }),
     })
+  },
+
+  getHome(homeId: string) {
+    return request<HomeDetails>(`/api/homes/${homeId}`)
   },
 
   addMember(homeId: string, name: string) {
@@ -76,20 +82,15 @@ export const api = {
   },
 
   getBalances(homeId: string) {
-    return request<{ balances: Balance[] }>(
-      `/api/homes/${homeId}/balances`,
-    )
+    return request<{ balances: Balance[] }>(`/api/homes/${homeId}/balances`)
   },
 
   payShare(billId: string, shareId: string, idempotencyKey: string) {
-    return request<Share>(
-      `/api/bills/${billId}/shares/${shareId}/pay`,
-      {
-        method: 'POST',
-        headers: {
-          'Idempotency-Key': idempotencyKey,
-        },
+    return request<Share>(`/api/bills/${billId}/shares/${shareId}/pay`, {
+      method: 'POST',
+      headers: {
+        'Idempotency-Key': idempotencyKey,
       },
-    )
+    })
   },
 }

@@ -1,5 +1,5 @@
 import type { Context } from 'hono'
-import { addMemberService, createHomeService } from '../services/home.service.js'
+import { addMemberService, createHomeService, getHomeService } from '../services/home.service.js'
 
 async function createHome(c: Context<{ Bindings: Env }>) {
   let body: unknown
@@ -68,4 +68,21 @@ async function addMember(c: Context<{ Bindings: Env }>) {
   }
 }
 
-export { addMember, createHome }
+export { addMember, createHome, getHome }
+
+async function getHome(c: Context<{ Bindings: Env }>) {
+  const homeId = c.req.param('homeId')
+  if (!homeId) {
+    return c.json({ error: 'homeId is required' }, 400)
+  }
+
+  try {
+    const home = await getHomeService(c.env.DB, homeId)
+    if (!home) {
+      return c.json({ error: 'Home not found' }, 404)
+    }
+    return c.json(home, 200)
+  } catch {
+    return c.json({ error: 'Failed to load home' }, 500)
+  }
+}
