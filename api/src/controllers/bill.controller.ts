@@ -29,12 +29,7 @@ async function createBill(c: Context<{ Bindings: Env }>) {
     return c.json({ error: 'Home ID is required' }, 400)
   }
 
-  const result = await createBillService(
-    c.env.DB,
-    homeId,
-    body.title.trim(),
-    body.totalCents,
-  )
+  const result = await createBillService(c.env.DB, homeId, body.title.trim(), body.totalCents)
 
   if ('error' in result) {
     if (result.error === 'HOME_NOT_FOUND') {
@@ -49,6 +44,4 @@ async function createBill(c: Context<{ Bindings: Env }>) {
   return c.json(result, 201)
 }
 
-export {
-  createBill,
-}
+export { createBill }

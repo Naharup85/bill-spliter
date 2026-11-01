@@ -1,5 +1,5 @@
 import type { Context } from 'hono'
-import { createHomeService, addMemberService } from '../services/home.service.js'
+import { addMemberService, createHomeService } from '../services/home.service.js'
 
 async function createHome(c: Context<{ Bindings: Env }>) {
   let body: unknown
@@ -22,7 +22,7 @@ async function createHome(c: Context<{ Bindings: Env }>) {
 
   try {
     const home = await createHomeService(c.env.DB, body.name.trim())
-    if(!home){
+    if (!home) {
       return c.json({ error: 'Home already exists' }, 409)
     }
     return c.json(home, 201)
@@ -56,11 +56,7 @@ async function addMember(c: Context<{ Bindings: Env }>) {
   }
 
   try {
-    const member = await addMemberService(
-      c.env.DB,
-      homeId,
-      body.name.trim(),
-    )
+    const member = await addMemberService(c.env.DB, homeId, body.name.trim())
 
     if (!member) {
       return c.json({ error: 'Home not found' }, 404)
@@ -72,7 +68,4 @@ async function addMember(c: Context<{ Bindings: Env }>) {
   }
 }
 
-export{
-    createHome,
-    addMember
-}
+export { addMember, createHome }

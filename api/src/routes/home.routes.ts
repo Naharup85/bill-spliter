@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import {createHome,addMember} from '../controllers/home.controller.js'
+import { addMember, createHome } from '../controllers/home.controller.js'
 
 const homeRoutes = new Hono<{ Bindings: Env }>()
 

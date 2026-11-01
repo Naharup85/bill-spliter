@@ -1,4 +1,9 @@
-async function createBillService(db: D1Database,homeId: string,title: string,totalCents: number) {
+async function createBillService(
+  db: D1Database,
+  homeId: string,
+  title: string,
+  totalCents: number,
+) {
   const home = await db
     .prepare('SELECT id FROM homes WHERE id = ?')
     .bind(homeId)
@@ -9,9 +14,7 @@ async function createBillService(db: D1Database,homeId: string,title: string,tot
   }
 
   const members = await db
-    .prepare(
-      'SELECT id FROM members WHERE home_id = ? ORDER BY member_order ASC',
-    )
+    .prepare('SELECT id FROM members WHERE home_id = ? ORDER BY member_order ASC')
     .bind(homeId)
     .all<{ id: string }>()
 
@@ -25,20 +28,21 @@ async function createBillService(db: D1Database,homeId: string,title: string,tot
   const billId = crypto.randomUUID()
 
   const shares = members.results.map((member, index) => ({
-  id: crypto.randomUUID(),
-  memberId: member.id,
-  amountCents: baseShare + (index < remainder ? 1 : 0),
-  paidAt: null,
-}))
+    id: crypto.randomUUID(),
+    memberId: member.id,
+    amountCents: baseShare + (index < remainder ? 1 : 0),
+    paidAt: null,
+  }))
 
   const statements = [
     db
-      .prepare(
-        'INSERT INTO bills (id, home_id, title, total_cents) VALUES (?, ?, ?, ?)',
-      )
+      .prepare('INSERT INTO bills (id, home_id, title, total_cents) VALUES (?, ?, ?, ?)')
       .bind(billId, homeId, title, totalCents),
-      ...shares.map(s => db.prepare(`INSERT INTO shares (id, bill_id, member_id, amount_cents) VALUES (?, ?, ?, ?)`)
-      .bind(s.id, billId, s.memberId, s.amountCents))
+    ...shares.map((s) =>
+      db
+        .prepare(`INSERT INTO shares (id, bill_id, member_id, amount_cents) VALUES (?, ?, ?, ?)`)
+        .bind(s.id, billId, s.memberId, s.amountCents),
+    ),
   ]
 
   await db.batch(statements)
@@ -47,10 +51,8 @@ async function createBillService(db: D1Database,homeId: string,title: string,tot
     homeId,
     title,
     totalCents,
-    shares
+    shares,
   }
 }
 
-export { 
-    createBillService,
-}
+export { createBillService }
