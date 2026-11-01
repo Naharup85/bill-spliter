@@ -1,12 +1,5 @@
 async function createHomeService(db: D1Database, name: string) {
 
-  const home = await db.prepare('SELECT * FROM homes WHERE name = ?')
-    .bind(name)
-    .first()
-
-  if (home) {
-    return null
-  }
   const id = crypto.randomUUID()
 
   await db.prepare('INSERT INTO homes (id, name) VALUES (?, ?)')
