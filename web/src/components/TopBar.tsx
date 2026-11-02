@@ -1,12 +1,14 @@
+import { Link } from '@tanstack/react-router'
+
 export function TopBar() {
   return (
     <nav className="topbar">
-      <a className="brand" href="/">
+      <Link className="brand" to="/">
         <span className="brand-icon">$</span>
         <span>
           Splitwise<span className="brand-dot">.</span>
         </span>
-      </a>
+      </Link>
       <span className="topbar-label">SHARED EXPENSES, SIMPLIFIED</span>
     </nav>
   )

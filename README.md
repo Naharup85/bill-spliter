@@ -166,6 +166,6 @@ I chose to maintain a `member_order` column in the members table using an auto-i
 
 I chose to use D1 batch operations when creating a bill and its shares. Since a bill and its shares are related records, creating them together helps maintain data consistency and prevents partially created bills.
 
-### 3. Persist the Selected Home Using localStorage
+### 3. Use URL-Based Home Navigation
 
-I chose to use browser localStorage to remember the selected home. This allows users to refresh the page or reopen the application without having to select their home again. It provides a simple solution without introducing authentication or session management.
+I chose to use the home ID in the URL (`/home/:homeId`) instead of storing the selected home in localStorage. This allows users to refresh the page, bookmark a specific home, or open it directly through its URL. It also avoids maintaining separate state for the selected home.

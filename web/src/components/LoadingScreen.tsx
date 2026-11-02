@@ -1,6 +1,14 @@
 import { TopBar } from './TopBar'
 
-export function LoadingScreen() {
+type Props = {
+  title?: string
+  message?: string
+}
+
+export function LoadingScreen({
+  title = 'Loading your home…',
+  message = 'Fetching your data from the server.',
+}: Props) {
   return (
     <main className="app-shell">
       <TopBar />
@@ -10,8 +18,8 @@ export function LoadingScreen() {
           <div className="card-icon">⌛</div>
           <div className="card-heading">
             <span className="section-label">LOADING</span>
-            <h2>Restoring your home…</h2>
-            <p>Fetching your data from the server.</p>
+            <h2>{title}</h2>
+            <p>{message}</p>
           </div>
         </div>
       </section>
