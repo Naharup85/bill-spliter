@@ -193,18 +193,44 @@ button {
 
 .workspace {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 8px 0 75px;
 }
 
-.setup-card,
-.dashboard-card {
+.setup-card {
   width: min(100%, 620px);
   padding: 34px;
   border: 1px solid #e7ece5;
   border-radius: 18px;
   background: white;
   box-shadow: 0 12px 40px #263d2d08;
+}
+
+.dashboard-card {
+  width: 100%;
+  padding: 34px;
+  border: 1px solid #e7ece5;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 12px 40px #263d2d08;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 24px;
+  align-items: flex-start;
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #edf0eb;
+  overflow-x: auto;
+}
+
+.dashboard-content > * {
+  flex: 1 1 0;
+  min-width: 260px;
 }
 
 .card-icon {
@@ -334,9 +360,7 @@ button:disabled {
 }
 
 .member-section {
-  margin-top: 32px;
-  padding-top: 25px;
-  border-top: 1px solid #edf0eb;
+  min-width: 0;
 }
 
 .member-heading {
@@ -458,9 +482,9 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 27px;
-  padding-top: 24px;
-  border-top: 1px solid #edf0eb;
+  margin-bottom: 27px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #edf0eb;
 }
 
 .input-row {
@@ -499,9 +523,9 @@ button:disabled {
   font-size: 11px;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .app-shell {
-    width: min(100% - 32px, 540px);
+    width: min(100% - 32px, 640px);
   }
 
   .topbar {
@@ -538,6 +562,22 @@ button:disabled {
     padding: 24px 20px;
   }
 
+  .dashboard-content {
+    flex-direction: column;
+    overflow-x: visible;
+    gap: 32px;
+  }
+
+  .dashboard-content > * {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .dashboard-content > * + * {
+    border-top: 1px solid #edf0eb;
+    padding-top: 28px;
+  }
+
   .footer {
     gap: 12px;
     font-size: 9px;
@@ -563,9 +603,7 @@ button:disabled {
 }
 
 .bill-section {
-  margin-top: 30px;
-  padding-top: 25px;
-  border-top: 1px solid #edf0eb;
+  min-width: 0;
 }
 
 .bill-list {
@@ -652,9 +690,7 @@ button:disabled {
 }
 
 .balance-section {
-  margin-top: 28px;
-  padding-top: 24px;
-  border-top: 1px solid #edf0eb;
+  min-width: 0;
 }
 
 .balance-list {

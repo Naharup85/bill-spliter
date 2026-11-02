@@ -69,7 +69,7 @@ export function BillSection({
         </div>
       ) : (
         <div className="bill-list">
-          {bills.map((bill) => (
+          {[...bills].reverse().map((bill) => (
             <article key={bill.id} className="bill-card">
               <div className="bill-heading">
                 <div>

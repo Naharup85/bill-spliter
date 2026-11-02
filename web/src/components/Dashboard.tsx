@@ -47,27 +47,29 @@ export function Dashboard({
         <span className="home-badge">Active home</span>
       </div>
 
-      <MemberSection
-        members={members}
-        memberName={memberName}
-        loading={loading}
-        onMemberNameChange={onMemberNameChange}
-        onSubmit={onAddMember}
-      />
+      <div className="dashboard-content">
+        <MemberSection
+          members={members}
+          memberName={memberName}
+          loading={loading}
+          onMemberNameChange={onMemberNameChange}
+          onSubmit={onAddMember}
+        />
 
-      <BillSection
-        bills={bills}
-        members={members}
-        billTitle={billTitle}
-        billAmount={billAmount}
-        loading={loading}
-        onBillTitleChange={onBillTitleChange}
-        onBillAmountChange={onBillAmountChange}
-        onSubmit={onCreateBill}
-        onPayShare={onPayShare}
-      />
+        <BillSection
+          bills={bills}
+          members={members}
+          billTitle={billTitle}
+          billAmount={billAmount}
+          loading={loading}
+          onBillTitleChange={onBillTitleChange}
+          onBillAmountChange={onBillAmountChange}
+          onSubmit={onCreateBill}
+          onPayShare={onPayShare}
+        />
 
-      <BalanceSection balances={balances} />
+        <BalanceSection balances={balances} />
+      </div>
     </div>
   )
 }
